@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} Vidura {% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+<link rel="stylesheet" href="{% static 'css/vidura.css' %}">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+{% endblock head %}
+
+{% block main %} 
+
+<section class="home" id="home">
+    <div class="container">
+        {% if user.is_authenticated %}
+        <div class="user-intro"><b>Welcome to our assistance, {{ user.username }} </b></div>
+        <button id="logoutbtn" class="right-button"><a href="/logout">Logout</a></button>
+        {% else %}
+        <div class="user-intro"><b>You are not Logged In? Login or Register!</b></div>
+        {% endif %}
+
+        {% if error_message %}
+        <div id="error-message" class="error-message"> 
+            <p>{{ error_message }}</p>
+            <div id="cross-btn" class="cross-btn">
+                <i class='bx bx-x'></i>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Other content -->
+
+        <div class="chat-img-box"></div>
+        <div class="user-box">
+            <div class="us-box-ins">
+                <div id="chatbox" class="mess-fm">
+                    <form class="message-form" id="chat-form" method="POST">
+                        {% csrf_token %}
+                        <!-- Input field commented out -->
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+        <script src="https://mediafiles.botpress.cloud/232baa16-fa79-42d5-b247-7c9a6a64799b/webchat/config.js" defer></script>
+    </div>
+</section>
+{% endblock main %}
+
+{% block script %}
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock script %}
